@@ -5,14 +5,18 @@ import org.apache.spark.{SparkConf, SparkContext}
 
 object WordCount {
   def main(args: Array[String]): Unit = {
+    var filePath : String ="input"
+    if(args.length  > 0)
+      filePath = args(0)
     //获取环境
-    val conf: SparkConf = new SparkConf().setMaster("local[*]").setAppName("SparkWordCount")
+    val conf: SparkConf = new SparkConf().setMaster("local").setAppName("SparkWordCount")
 
     //获取上下文
     val sc: SparkContext = new SparkContext(conf)
 
     //读取每一行
-    val lines: RDD[String] = sc.textFile("input")
+
+    val lines: RDD[String] = sc.textFile(filePath)
 
     //扁平化，将每行数据拆分成单个词（自定义业务逻辑）
     val words: RDD[String] = lines.flatMap(_.split(" "))
