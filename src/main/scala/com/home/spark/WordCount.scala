@@ -9,7 +9,7 @@ object WordCount {
     if(args.length  > 0)
       filePath = args(0)
     //获取环境
-    val conf: SparkConf = new SparkConf().setMaster("local").setAppName("SparkWordCount")
+    val conf: SparkConf = new SparkConf(true).setAppName("SparkWordCount").setMaster("local[*]")
 
     //获取上下文
     val sc: SparkContext = new SparkContext(conf)
