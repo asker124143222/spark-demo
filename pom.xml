@@ -27,6 +27,17 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.47</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-client</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+        <!--TableInputTable被调整到base-mapreduce中-->
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-mapreduce</artifactId>
+            <version>2.0.4</version>
+        </dependency>
     </dependencies>
 
 
