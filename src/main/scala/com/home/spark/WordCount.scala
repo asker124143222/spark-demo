@@ -26,7 +26,6 @@ object WordCount {
 
     //词频计数
     val wordToSum: RDD[(String, Int)] = wordToOne.reduceByKey(_+_)
-
     //按词频数量降序排序
     val wordToSorted: RDD[(String, Int)] = wordToSum.sortBy(_._2,false)
 
