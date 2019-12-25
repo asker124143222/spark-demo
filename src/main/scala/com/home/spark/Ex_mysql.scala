@@ -24,6 +24,7 @@ object Ex_mysql {
     val user = "root"
     val password = "root"
 
+    //mysql里时间类型为datetime，传入的条件为时间戳
     val sql = "select userId,userName,name from user where createTime > from_unixtime(?) and createTime < from_unixtime(?)"
 
 
@@ -34,6 +35,7 @@ object Ex_mysql {
 
     val startTime = LocalDateTime.of(2018, 11, 3, 0, 0, 0)
     val endTime = LocalDateTime.of(2018, 11, 4, 0, 0)
+    //mysql的时间戳只有10位，需要把java里的13位时间戳降低精度，直接除以1000
     val startTimeStamp = startTime.toInstant(ZoneOffset.ofHours(8)).toEpochMilli / 1000
     val endTimeStamp = endTime.toInstant(ZoneOffset.ofHours(8)).toEpochMilli / 1000
 
