@@ -1,5 +1,6 @@
 package com.home.spark
 
+
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.hbase.HBaseConfiguration
 import org.apache.hadoop.hbase.client.Put
@@ -7,10 +8,12 @@ import org.apache.hadoop.hbase.io.ImmutableBytesWritable
 import org.apache.hadoop.hbase.mapred.TableOutputFormat
 import org.apache.hadoop.hbase.util.Bytes
 import org.apache.hadoop.mapred.JobConf
+import org.apache.hadoop.mapreduce.Job
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
 import scala.collection.mutable
+
 
 /**
   * @Author: xu.dm
@@ -20,6 +23,7 @@ import scala.collection.mutable
   **/
 object Ex_hbase2 {
   def main(args: Array[String]): Unit = {
+
     val conf = new SparkConf(true).setMaster("local[*]").setAppName("spark hbase write")
     val sc = new SparkContext(conf)
 
@@ -51,5 +55,6 @@ object Ex_hbase2 {
     putRDD.saveAsHadoopDataset(jobConf)
 
     sc.stop()
+
   }
 }

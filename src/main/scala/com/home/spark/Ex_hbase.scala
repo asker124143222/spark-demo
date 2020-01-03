@@ -1,5 +1,6 @@
 package com.home.spark
 
+
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.hbase.HBaseConfiguration
 import org.apache.hadoop.hbase.client.Result
@@ -9,6 +10,7 @@ import org.apache.hadoop.hbase.util.Bytes
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
+
 /**
   * @Author: xu.dm
   * @Date: 2019/12/6 16:09
@@ -16,6 +18,7 @@ import org.apache.spark.{SparkConf, SparkContext}
   * @Description: 从hbase读取数据
   **/
 object Ex_hbase {
+
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf(true).setAppName("Spark hbase demo").setMaster("local[*]")
     val sc = new SparkContext(conf)
@@ -59,5 +62,6 @@ object Ex_hbase {
 
     sc.stop()
   }
+
 
 }

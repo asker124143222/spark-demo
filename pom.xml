@@ -22,16 +22,23 @@
             <artifactId>spark-core_2.11</artifactId>
             <version>2.4.4</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-sql_2.11</artifactId>
             <version>2.4.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-streaming_2.11</artifactId>
+            <version>2.4.4</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-mllib_2.11</artifactId>
             <version>2.4.4</version>
-            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -46,18 +53,20 @@
             <version>5.1.47</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
             <version>2.0.4</version>
         </dependency>
+
+
         <!--TableInputTable被调整到base-mapreduce中-->
-        <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-mapreduce</artifactId>
-            <version>2.0.4</version>
-        </dependency>
+        <!--依赖冲突，直接手动引入jar包-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.hbase</groupId>-->
+            <!--<artifactId>hbase-mapreduce</artifactId>-->
+            <!--<version>2.0.4</version>-->
+        <!--</dependency>-->
 
 
     </dependencies>
