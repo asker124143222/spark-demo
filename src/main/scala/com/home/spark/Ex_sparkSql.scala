@@ -12,7 +12,7 @@ import org.apache.spark.sql.{DataFrame, Dataset, Row, SparkSession}
   *               DataFrame，是数据结构，类似数据库表，Dataframe的劣势在于在编译期缺少类型安全检查，导致运行时出错.
   *               DataSet，是数据集，比DataFrame更进一步，是对数据结构进行对象式的描述
   *
-  *               todo
+  *               DataSet
   *               1）是Dataframe API的一个扩展，是Spark最新的数据抽象
   *               2）用户友好的API风格，既具有类型安全检查也具有Dataframe的查询优化特性。
   *               3）Dataset支持编解码器，当需要访问非堆上的数据时可以避免反序列化整个对象，提高了效率。
