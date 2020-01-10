@@ -13,10 +13,10 @@ import org.apache.spark.ml.linalg.Vector
   * @Date: 2020/1/2 17:01
   * @Version: 1.0
   * @Description: 机器学习，训练样本数据，给生产数据打标签
-  *              样本训练数据中带有hello的文本，打标签为1，否则为0
-  *              通过训练模型，我们希望待测试数据同样用这种方式打上标签。
+  *               样本训练数据中带有hello的文本，打标签为1，否则为0
+  *               通过训练模型，我们希望待测试数据同样用这种方式打上标签。
   **/
-object Ex_label {
+object Ex_pipeline {
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf(true).setMaster("local[*]").setAppName("spark ml label")
     val spark = SparkSession.builder().config(conf).getOrCreate()
@@ -56,12 +56,29 @@ object Ex_label {
       .setInputCol("text")
       .setOutputCol("words")
 
+
     //Transformer,转换器，哈希转换，以哈希方式将词转换成词频，转成特征向量
-    val hashTF: HashingTF = new HashingTF().setNumFeatures(1000)
+    val hashTF: HashingTF = new HashingTF()
+      .setNumFeatures(1000) //缺省是2^18
       .setInputCol(tokenizer.getOutputCol).setOutputCol("features")
+
+    //打印hashingTF生成的稀疏向量长什么样
+    val wordsData = tokenizer.transform(training)
+    wordsData.collect().foreach(println)
+
+    println()
+
+    val hashData = hashTF.transform(wordsData)
+    hashData.collect().foreach(println)
+
+    //[0,why hello world JAVA,1.0,WrappedArray(why, hello, world, java),(1000,[48,150,967,973],[1.0,1.0,1.0,1.0])]
+    //向量长度1000，和setNumFeatures的值一致，然后索引是[48,150,967,973],值都是1.0，实际就是命中hash桶
+
 
     //Estimator，预测器或评估器，逻辑回归，10次最大迭代
     val lr: LogisticRegression = new LogisticRegression().setMaxIter(10).setRegParam(0.01)
+//    val lr: LogisticRegression = new LogisticRegression().setMaxIter(10).setRegParam(0.01)
+//  .setLabelCol("label").setFeaturesCol("features")
 
     //预测器通过 fit() 方法，接收一个 DataFrame 并产出一个模型
     //封装流水线,包含两个转换器（实际包含两个模型），一个评估器（包含一个算法）
@@ -101,8 +118,12 @@ object Ex_label {
     }).filter(s => !s._1.equals("-1"))
       .toDF("id", "text")
 
+    println()
+
     //对给定数据进行预测
-    model.transform(test)
+    val result = model.transform(test)
+    result.show(false)
+    result
       .select("id", "text", "probability", "prediction")
       .collect()
       .foreach {
