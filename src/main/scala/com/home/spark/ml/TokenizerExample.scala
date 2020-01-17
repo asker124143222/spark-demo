@@ -10,6 +10,12 @@ import org.apache.spark.sql.functions._
   * @Date: 2020/1/3 16:43
   * @Version: 1.0
   * @Description: Tokenizer分词器
+  *
+  *
+  * RegexTokenizer允许基于正则表达式（regex）匹配进行更高级的标记化。
+  * 默认情况下，参数“ pattern”（正则表达式，默认值：“ \\ s +”）用作分隔输入文本的定界符。
+  * 或者，用户可以将参数“ gap”设置为false，
+  * 以表示正则表达式“ pattern”表示“令牌”，而不是拆分间隙，并找到所有匹配的出现作为标记化结果。
   **/
 object TokenizerExample {
   def main(args: Array[String]): Unit = {
