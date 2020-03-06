@@ -41,7 +41,9 @@ object Ex_pipeline {
         ("-1", strings.mkString(" "), 0.0)
       }
 
-    }).filter(s => !s._1.equals("-1"))
+    })
+//      .filter(s => !s._1.equals("-1"))
+      .filter(!_._1.equals("-1"))
       .toDF("id", "text", "label")
 
     training.printSchema()
@@ -75,13 +77,13 @@ object Ex_pipeline {
     //向量长度1000，和setNumFeatures的值一致，然后索引是[48,150,967,973],值都是1.0，实际就是命中hash桶
 
 
-    //Estimator，预测器或评估器，逻辑回归，10次最大迭代
+    //Estimator，预测器或估算器，逻辑回归，10次最大迭代
     val lr: LogisticRegression = new LogisticRegression().setMaxIter(10).setRegParam(0.01)
 //    val lr: LogisticRegression = new LogisticRegression().setMaxIter(10).setRegParam(0.01)
 //  .setLabelCol("label").setFeaturesCol("features")
 
-    //预测器通过 fit() 方法，接收一个 DataFrame 并产出一个模型
-    //封装流水线,包含两个转换器（实际包含两个模型），一个评估器（包含一个算法）
+    //预测器通过 fit() 方法，接收一个 DataFrame 并产出一个模型（fit代表拟合）
+    //封装流水线,包含两个转换器（实际包含两个模型），一个估算器（包含一个算法）
     //因为还有评估器，所以需要训练生成最终模型
     val pipeline: Pipeline = new Pipeline().setStages(Array(tokenizer, hashTF, lr))
 

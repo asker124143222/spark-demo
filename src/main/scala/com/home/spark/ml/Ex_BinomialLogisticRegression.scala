@@ -78,6 +78,8 @@ object Ex_BinomialLogisticRegression {
     val lr = new LogisticRegression().setLabelCol("indexedLabel").setFeaturesCol("indexedFeatures")
       .setMaxIter(100).setRegParam(0.3).setElasticNetParam(0.8)
 
+
+
     //转换器，将预测的类别重新转成字符型
     val labelConverter = new IndexToString()
       .setInputCol("prediction")

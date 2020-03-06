@@ -62,12 +62,44 @@ object Ex_DecisionTree {
 
     result.show(150,false)
 
-    //模型评估，预测准确性和错误率
+    /**
+      * 样本分为：正类样本和负类样本。
+      * TP：被分类器正确分类的正类样本数。
+      * TN: 被分类器正确分类的负类样本数。
+      * FP: 被分类器错误分类的正类样本数。（本来是负，被预测为正） ---------->正
+      * FN: 被分类器错误分类的负类样本数。 (本来是正， 被预测为负) ---------->负
+      *
+      * 准确率(Accuracy ACC)
+      * 总样本数=TP+TN+FP+FN
+      * ACC=(TP+TN)/(总样本数)
+      * 该评价指标主要针对分类均匀的数据集。
+      */
     val evaluator = new MulticlassClassificationEvaluator().setLabelCol("indexedLabel").setPredictionCol("prediction")
       .setMetricName("accuracy")
     val accuracy: Double = evaluator.evaluate(result)
 
     println("Accuracy = " + accuracy)
+
+    /**
+      * 精确率（Precision 查准率）
+      * Precision = TP / （TP+ FP） 准确率，表示模型预测为正样本的样本中真正为正的比例
+      */
+    val evaluator2 = new MulticlassClassificationEvaluator().setLabelCol("indexedLabel").setPredictionCol("prediction")
+      .setMetricName("weightedPrecision")
+    val weightedPrecision: Double = evaluator2.evaluate(result)
+
+    println("weightedPrecision = " + weightedPrecision)
+
+    /**
+      * 召回率（查全率）
+      * Recall = TP /（TP + FN） 召回率，表示模型准确预测为正样本的数量占所有正样本数量的比例
+      */
+    val evaluator3 = new MulticlassClassificationEvaluator().setLabelCol("indexedLabel").setPredictionCol("prediction")
+      .setMetricName("weightedRecall")
+    val weightedRecall: Double = evaluator3.evaluate(result)
+
+    println("weightedRecall = " + weightedRecall)
+
 
     val treeModel = modelDecisionTreeClassifier.stages(2).asInstanceOf[DecisionTreeClassificationModel]
     println("Learned classification tree model:\n" + treeModel.toDebugString)
